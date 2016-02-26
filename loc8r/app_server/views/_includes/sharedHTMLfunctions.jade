@@ -1,0 +1,33 @@
+mixin outputRating(rating)
+  - for (var i = 0; i < rating; i++)
+    span.glyphicon.glyphicon-star
+  - for (var i = rating; i < 5; i++)
+    span.glyphicon.glyphicon-star-empty
+
+mixin outputOpeningHours(openingTimes)
+  each time in openingTimes
+    p
+      | #{time.days} :&nbsp;
+      if time.closed
+        | closed
+      else
+        | #{time.opening} - #{time.closing}
+
+mixin outputFacilities(facilities)
+  each facility in facilities
+    span.label.label-warning
+      span.glyphicon.glyphicon-ok
+      | &nbsp;#{facility}
+    | &nbsp;
+
+mixin outputReviewRows(reviews)
+  each review in reviews
+    .row
+      .review
+        .well.well-sm.review-header
+          span.rating
+            +outputRating(review.rating)
+          span.reviewAuthor= review.author
+          small.reviewTimestamp= review.timestamp
+        .col-xs-12
+          p !{(review.reviewText).replace(/\n/g, '<br/>')}
