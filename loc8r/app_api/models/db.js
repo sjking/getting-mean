@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var gracefulShutdown;
-var dbURI = 'mongodb://localhost/Loc8r';
+var dbURI = 'mongodb://mean.vagrant:27017/Loc8r';
 if (process.env.NODE_ENV === 'production') {
 	dbURI = process.env.MONGOLAB_URI;
 }
@@ -30,7 +30,7 @@ process.once('SIGUSR2', function () {
 	});
 });
 // For app termination
-process.on('SIGINT', function() {
+process.once('SIGINT', function() {
 	gracefulShutdown('app termination', function () {
 		process.exit(0);
 	});
